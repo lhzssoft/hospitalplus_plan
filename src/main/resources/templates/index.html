@@ -1,0 +1,320 @@
+<!doctype html>
+<html class='no-js'  xmlns:th='http://www.thymeleaf.org' >
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='description' content=''>
+  <meta name='keywords' content=''>
+  <meta name='viewport'
+        content='width=device-width, initial-scale=1'>
+  <title>TEAM_HOSPITAL+</title>
+
+  <!-- Set render engine for 360 browser -->
+  <meta name='renderer' content='webkit'>
+
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv='Cache-Control' content='no-siteapp'/>
+
+  <link rel='icon' type='image/png' href='assets/i/favicon.png'>
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name='mobile-web-app-capable' content='yes'>
+  <link rel='icon' sizes='192x192' href='assets/i/app-icon72x72@2x.png'>
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name='apple-mobile-web-app-capable' content='yes'>
+  <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+  <meta name='apple-mobile-web-app-title' content=''/>
+  <link rel='apple-touch-icon-precomposed' href='assets/i/app-icon72x72@2x.png'>
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name='msapplication-TileImage' content='assets/i/app-icon72x72@2x.png'>
+  <meta name='msapplication-TileColor' content='#0e90d2'>
+
+  <link rel='stylesheet' href='assets/css/amazeui.min.css'>
+  <link rel='stylesheet' href='assets/css/app.css'>
+  
+  <style>
+  	.am-panel-default { margin-bottom:6px;}
+  </style>
+</head>
+<body>
+	<div class='am-g'>
+		<ul class="am-nav am-u-sm-1">
+		
+		  <li class="am-margin-vertical">
+		  	<a href="#">
+		  		<i class='am-icon-user'></i>
+		  		<span>成员登陆</span>
+		  	</a>
+		  </li>
+		  
+		  <li  class="am-text-sm">
+		  	<a href="#">
+		  		<i class='am-icon-file-text-o'></i>
+		  		<span>项目计划</span>
+		  	</a>
+		  </li>
+		  
+		  <li class="am-text-sm">
+		  	<a href="#">
+		  		<i class='am-icon-pencil-square-o'></i>
+		  		<span>工作进度</span>
+		  	</a>
+		  </li>
+		  
+		  <li class="am-text-sm">
+		  	<a href="#">
+		  		<i class='am-icon-line-chart'></i>
+		  		<span>任务统计</span>
+		  	</a>
+		  </li>
+		  
+		  <li class="am-text-sm">
+		  	<a href="#">
+		  		<i class='am-icon-list'></i>
+		  		<span>接口文档</span>
+		  	</a>
+		  </li>
+		  
+		  <li class="am-text-sm">
+		  	<a href="#">
+		  		<i class='am-icon-gear'></i>
+		  		<span>服务设置</span>
+		  	</a>
+		  </li>
+		  		  
+		  <li class="am-text-sm">
+		  	<a href="#">
+		  		<i class='am-icon-twitch'></i>
+		  		<span>BUG反馈</span>
+		  	</a>
+		  </li>
+		  
+		</ul>
+		<div class='am-u-sm-11'>
+			<div class='am-margin'>
+				<h1>
+					<small class='am-icon-btn am-secondary am-icon-drupal'></small>
+					<span class='am-margin-horizontal'>互联网医院</span><span class='am-text-default'>工作台</span>
+				</h1>
+			</div>
+			<div class='am-margin'>
+				<!-- 任务面板 -->
+				<div class='am-g '>
+					<ul class='am-avg-sm-4' id='vueapp'>
+					
+						<li class='am-padding' 
+							data-period='0'
+							v-on:dragenter='event_ondragenter' 
+							v-on:dragleave='event_ondragleave'
+							v-on:dragexit='event_ondragexit'
+							v-on:dragover='event_ondragover'
+							v-on:dragend='event_ondragend'
+							v-on:drop='event_ondrop'
+						>
+							<div class='am-margin-bottom am-text-default'>计划中</div>
+							<div class="am-panel am-panel-default" 
+								 id='{{foo.id}}'
+								 draggable='true' 
+								 v-for="foo in result |filterBy 0 in 'period'"  
+								 v-on:dragstart='event_ondragstart'
+							>
+							    <div class="am-panel-bd  am-text-sm">
+							    	<div v-text='foo.content'></div>
+							    	<div class='am-margin-top-sm am-text-xs'>
+							    		<span class='am-icon-calendar-o'></span>
+							    		<span class='' v-text='foo.time'></span>
+							    		<span class='am-fr am-badge am-badge-secondary ' v-text='foo.account'></span>
+							    	</div>
+							    </div>
+							</div>
+						</li>
+						
+						<li class='am-padding' 
+							data-period='1'
+							v-on:dragenter='event_ondragenter' 
+							v-on:dragleave='event_ondragleave'
+							v-on:dragexit='event_ondragexit'
+							v-on:dragover='event_ondragover'
+							v-on:dragend='event_ondragend'
+							v-on:drop='event_ondrop'
+						>
+							<div class='am-margin-bottom am-text-default'>进行中</div>
+							<div class="am-panel am-panel-default" 
+								 id='{{foo.id}}'
+								 draggable='true' 
+								 v-for="foo in result |filterBy 1 in 'period'"  
+								 v-on:dragstart='event_ondragstart'
+							>
+							    <div class="am-panel-bd  am-text-sm">
+							    	<div v-text='foo.content'></div>
+							    	<div class='am-margin-top-sm am-text-xs'>
+							    		<span class='am-icon-calendar-o'></span>
+							    		<span class='' v-text='foo.time'></span>
+							    		<span class='am-fr am-badge am-badge-secondary ' v-text='foo.account'></span>
+							    	</div>
+							    </div>
+							</div>
+						</li>
+						
+						<li class='am-padding' 
+							data-period='2'
+							v-on:dragenter='event_ondragenter' 
+							v-on:dragleave='event_ondragleave'
+							v-on:dragexit='event_ondragexit'
+							v-on:dragover='event_ondragover'
+							v-on:dragend='event_ondragend'
+							v-on:drop='event_ondrop'
+						>
+							<div class='am-margin-bottom am-text-default'>测试中</div>
+							<div class="am-panel am-panel-default" 
+								 id='{{foo.id}}'
+								 draggable='true' 
+								 v-for="foo in result |filterBy 2 in 'period'"  
+								 v-on:dragstart='event_ondragstart'
+							>
+							    <div class="am-panel-bd  am-text-sm">
+							    	<div v-text='foo.content'></div>
+							    	<div class='am-margin-top-sm am-text-xs'>
+							    		<span class='am-icon-calendar-o'></span>
+							    		<span class='' v-text='foo.time'></span>
+							    		<span class='am-fr am-badge am-badge-secondary ' v-text='foo.account'></span>
+							    	</div>
+							    </div>
+							</div>
+						</li>
+						
+						<li class='am-padding' 
+							data-period='3'
+							v-on:dragenter='event_ondragenter' 
+							v-on:dragleave='event_ondragleave'
+							v-on:dragexit='event_ondragexit'
+							v-on:dragover='event_ondragover'
+							v-on:dragend='event_ondragend'
+							v-on:drop='event_ondrop'
+						>
+							<div class='am-margin-bottom am-text-default'>发布中</div>
+							<div class="am-panel am-panel-default" 
+								 id='{{foo.id}}'
+								 draggable='true' 
+								 v-for="foo in result |filterBy 3 in 'period'"  
+								 v-on:dragstart='event_ondragstart'
+							>
+							    <div class="am-panel-bd  am-text-sm">
+							    	<div v-text='foo.content'></div>
+							    	<div class='am-margin-top-sm am-text-xs'>
+							    		<span class='am-icon-calendar-o'></span>
+							    		<span class='' v-text='foo.time'></span>
+							    		<span class='am-fr am-badge am-badge-secondary ' v-text='foo.account'></span>
+							    	</div>
+							    </div>
+							</div>
+						</li>
+		
+					</ul>
+				</div>
+			</div>
+ 		</div>
+ 	</div>
+
+	<!--[if (gte IE 9)|!(IE)]><!-->
+	<script src='assets/js/jquery.min.js'></script>
+	<!--<![endif]-->
+	<!--[if lte IE 8 ]>
+	<script src='http://libs.baidu.com/jquery/1.11.3/jquery.min.js'></script>
+	<script src='http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js'></script>
+	<script src='assets/js/amazeui.ie8polyfill.min.js'></script>
+	<![endif]-->
+	<script src='assets/js/amazeui.min.js'></script>
+	<script src='assets/js/vue.js'></script>
+	<script src='assets/js/vue-resource.js'></script>
+	
+	<script>
+		$(document).ready(function(){ 
+			new Vue({
+				el:'#vueapp',
+			    ready:function() 
+			    {
+			      	this.$http.get('/mission').then((response) => {
+			          // success callback
+
+			          //console.log( JSON.stringify(response.data));
+			          this.$set('result', response.data);
+			          
+								          
+			      }, (response) => {
+			          // error callback
+			    	  console.log(response);
+			      });
+
+			    },
+				data:{ result:{}},
+				methods: 
+				{
+					event_ondragstart: function (e) 
+				    {
+						e.dataTransfer.setData("Text", e.target.id);
+				    },
+					event_ondragenter: function (e) 
+				    {
+						e.preventDefault();  
+				    },
+					event_ondragover: function (e) 
+				    {
+						e.preventDefault();  
+				    },
+					event_ondragleave: function (e) 
+				    {
+						e.preventDefault();  
+				    },
+					event_ondragend: function (e) 
+				    {
+						e.preventDefault();  
+				    },
+					event_ondragexit: function (e) 
+				    {
+						e.preventDefault();  
+				    },
+					event_ondrop: function (e) 
+				    {
+						 e.preventDefault();
+
+						 var id = event.dataTransfer.getData('Text');  
+						 
+						 var foo = $(e.target) ;
+						 
+						 if( ! foo.is('LI'))
+							 foo = $(e.target).parents('LI').first() ;
+						 
+						 if(id)
+						 {
+							 
+							 $.ajax({
+								  		method: 'PUT',
+								  		url: '/mission/' + id ,
+								  		data: { period :  foo.data('period') }
+						 		
+						 		   })
+						 		   .done(function( data ,status ) {
+						 			   
+										 if( $(e.target).is('LI'))
+											 $(e.target).append( $('#'+id)) ;
+										 else
+											 $(e.target).parents('.am-panel').first().after( $('#'+id));
+									 	
+						 	 });
+							 
+						 }	 
+								 
+				    }
+				}
+			});	
+
+		});
+		
+ 
+		
+	</script>
+</body>
+</html>
